@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: TaskTimeTrackerApi
+    rest:
+      api:
+        prefix: /api
+  datasource:
+    url: jdbc:postgresql://localhost:5435/task_time_tracker
+    username: user
+    password: 6758
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    locations: classpath:db/migration
+    encoding: UTF-8
+    validate-on-migrate: false
+    baseline-version: 1
+    baseline-on-migrate: true
+    loggers: slf4j
+
+
+server:
+  port: 8080
+  base-url:
+    auth: /api/v1/auth
+    task: api/v1/task
+    users: api/v1/users
+
+
+csrf:
+  token:
+    header-name: X-CSRF-TOKEN
+
+jwt:
+  cookie-token-key: '{"kty":"oct","k":"956PBFst1FguLr5irJD-aQ"}'
+
+
+logging:
+  level:
+    root: info
+    org.springframework.security: debug
+  pattern:
+    console: '%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %clr(%-5level) %logger{36} - %msg%n'
