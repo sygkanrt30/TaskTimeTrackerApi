@@ -58,6 +58,7 @@ public class SecurityConfig {
                                         "/swagger-resources/**",
                                         "/webjars/**"
                                 ).permitAll()
+                                .requestMatchers("/actuator/**").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

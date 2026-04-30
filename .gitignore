@@ -12,3 +12,5 @@ target
 *.sh
 
 .vscode/
+
+.env

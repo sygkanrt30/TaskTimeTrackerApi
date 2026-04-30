@@ -28,7 +28,7 @@ mybatis:
     map-underscore-to-camel-case: true
 
 jwt:
-  cookie-token-key: '{"kty":"oct","k":"956PBFst1FguLr5irJD-aQ"}'
+  cookie-token-key: ${JWT_COOKIE_TOKEN_KEY}
 
 
 logging:
