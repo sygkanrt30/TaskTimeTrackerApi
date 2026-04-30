@@ -1,0 +1,256 @@
+{
+  "info": {
+    "_postman_id": "95e36244-0bb8-41f4-9b54-15275d767aae",
+    "name": "TaskTimeTrackerApi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "41700137"
+  },
+  "item": [
+    {
+      "name": "csrf",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/csrf",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "csrf"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "do reg",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-XSRF-TOKEN",
+            "value": "055f909a-d0f8-4e5e-9941-f9715f7997a8",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\" : \"kentucki4232\",\r\n    \"password\" : \"Ss@159357\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/auth/reg",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "reg"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "log in",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-XSRF-TOKEN",
+            "value": "1b662240-8a40-4be7-9de4-e128608805d0",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\" : \"kentucki4232\",\r\n    \"password\" : \"Ss@159357\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "save task",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-XSRF-TOKEN",
+            "value": "1b662240-8a40-4be7-9de4-e128608805d0",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\" : \"task1\",\r\n    \"description\" : \"Some description...........\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/task",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "task"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-XSRF-TOKEN",
+            "value": "1b662240-8a40-4be7-9de4-e128608805d0",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"taskId\" : 1,\r\n    \"status\" : \"IN_PROGRESS\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/task/update/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "task",
+            "update",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "save time record",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-XSRF-TOKEN",
+            "value": "1b662240-8a40-4be7-9de4-e128608805d0",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"taskId\": 1,\r\n  \"startTime\": \"2026-04-28T09:00:00\",\r\n  \"endTime\": \"2026-04-28T17:30:00\",\r\n  \"descriptionOfWork\": \"Разработка API для учета времени\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/task/time_record",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "task",
+            "time_record"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get time spent on tasks",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-XSRF-TOKEN",
+            "value": "055f909a-d0f8-4e5e-9941-f9715f7997a8",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"start\": \"2026-04-28 09:00:00\",\r\n    \"end\": \"2026-04-28 17:30:00\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/task/time_record/time_of_work/for_period",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "task",
+            "time_record",
+            "time_of_work",
+            "for_period"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
