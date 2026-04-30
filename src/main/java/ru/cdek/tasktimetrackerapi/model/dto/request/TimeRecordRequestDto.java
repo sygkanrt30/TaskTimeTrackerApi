@@ -1,11 +1,14 @@
 package ru.cdek.tasktimetrackerapi.model.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public record TimeRecordRequestDto (
-        Long taskId,
-        LocalDateTime startTime,
-        LocalDateTime endTime,
-        String descriptionOfWork
+        @NotNull Long taskId,
+        @NotNull LocalDateTime startTime,
+        @NotNull LocalDateTime endTime,
+        @NotBlank String descriptionOfWork
 ) {
 }

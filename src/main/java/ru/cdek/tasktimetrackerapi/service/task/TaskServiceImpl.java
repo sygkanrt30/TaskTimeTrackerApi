@@ -22,7 +22,7 @@ import java.util.Optional;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final TimeRecordService TimeRecordService;
+    private final TimeRecordService timeRecordService;
     private final TaskMapper taskMapper;
 
     @Override
@@ -35,20 +35,35 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskResponseDto updateTaskStatus(UpdateTaskStatusRequest request) {
         TaskStatus newStatus = request.status();
-        if (newStatus.equals(TaskStatus.NEW)) {
-            throw new IllegalArgumentException("Can not update task status to NEW");
-        }
-        Task task = taskRepository.findById(request.taskId())
-                .orElseThrow(() -> new EntityNotFoundException("Task with id " + request.taskId() + " not found"));
+        validateNewStatus(request.status());
 
-        Optional<TimeRecord> timeRecords = TimeRecordService.findByTaskId(task.getId());
-        if (timeRecords.isPresent() && newStatus.equals(TaskStatus.IN_PROGRESS)) {
-            throw new IllegalArgumentException("Can not update task status to IN_PROGRESS if time records exist");
-        }
+        Task task = findTaskById(request.taskId());
+        validateStatusTransition(task, request.status());
+
         task.setStatus(newStatus);
         taskRepository.updateStatus(task.getId(), newStatus);
 
         log.info("Updated task {}", task);
         return taskMapper.toDto(task);
+    }
+
+    private void validateNewStatus(TaskStatus newStatus) {
+        if (newStatus.equals(TaskStatus.NEW)) {
+            throw new IllegalArgumentException("Cannot update task status to NEW");
+        }
+    }
+
+    private Task findTaskById(Long taskId) {
+        return taskRepository.findById(taskId)
+                .orElseThrow(() -> new EntityNotFoundException("Task with id " + taskId + " not found"));
+    }
+
+    private void validateStatusTransition(Task task, TaskStatus newStatus) {
+        if (newStatus.equals(TaskStatus.IN_PROGRESS)) {
+            Optional<TimeRecord> timeRecords = timeRecordService.findByTaskId(task.getId());
+            if (timeRecords.isPresent()) {
+                throw new IllegalArgumentException("Cannot update task status to IN_PROGRESS if time records exist");
+            }
+        }
     }
 }

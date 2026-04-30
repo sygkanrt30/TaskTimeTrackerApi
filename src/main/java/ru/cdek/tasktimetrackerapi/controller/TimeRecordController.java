@@ -21,7 +21,7 @@ public class TimeRecordController {
     private final TimeRecordService timeRecordService;
 
     @PostMapping
-    public ResponseEntity<String> createTimeRecord(@RequestBody @Valid TimeRecordRequestDto timeRecordRequestDto,
+    public ResponseEntity<String> createTimeRecord(@Valid @RequestBody TimeRecordRequestDto timeRecordRequestDto,
                                                    @AuthenticationPrincipal UserDetails user) {
         timeRecordService.save(timeRecordRequestDto, user.getUsername());
         return ResponseEntity.ok("Time record created");
@@ -29,7 +29,7 @@ public class TimeRecordController {
 
     @GetMapping("/time_of_work/for_period")
     public ResponseEntity<EmployeeWorkTimeResponse> getTimeOfWorkForPeriod(@AuthenticationPrincipal UserDetails user,
-                                                                           @RequestBody @Valid PeriodRequest periodRequest) {
+                                                                           @Valid @RequestBody PeriodRequest periodRequest) {
         return ResponseEntity.ok(timeRecordService.getTimeOfWorkForPeriod(periodRequest, user.getUsername()));
     }
 }

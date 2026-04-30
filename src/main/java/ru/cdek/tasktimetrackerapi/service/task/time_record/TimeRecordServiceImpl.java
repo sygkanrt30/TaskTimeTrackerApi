@@ -34,20 +34,37 @@ public class TimeRecordServiceImpl implements TimeRecordService {
         Task task = taskRepository.findById(request.taskId())
                 .orElseThrow(() -> new EntityNotFoundException("Task not found"));
 
+        validateTaskStatus(task);
+        validateTimeRange(request.startTime(), request.endTime());
+
+        TimeRecord timeRecord = createTimeRecord(user, task, request);
+        timeRecordRepository.save(timeRecord);
+        log.info("Saved time record {}", timeRecord);
+    }
+
+    private void validateTaskStatus(Task task) {
         if (!task.getStatus().equals(TaskStatus.DONE)) {
             throw new IllegalStateException("Can not save time record if task isn't done");
         }
-        if (request.startTime().isAfter(request.endTime())) {
+    }
+
+    private void validateTimeRange(LocalDateTime startTime, LocalDateTime endTime) {
+        if (startTime.isAfter(endTime)) {
             throw new IllegalArgumentException("Start time is after end time");
         }
-        var timeRecord = new TimeRecord(
+        if (startTime.equals(endTime)) {
+            throw new IllegalArgumentException("Start time cannot be equals end time");
+        }
+    }
+
+    private TimeRecord createTimeRecord(User user, Task task, TimeRecordRequestDto request) {
+        return new TimeRecord(
                 user.getId(),
                 task.getId(),
                 request.startTime(),
                 request.endTime(),
-                request.descriptionOfWork());
-        timeRecordRepository.save(timeRecord);
-        log.info("Saved time record {}", timeRecord);
+                request.descriptionOfWork()
+        );
     }
 
     @Override
@@ -67,7 +84,12 @@ public class TimeRecordServiceImpl implements TimeRecordService {
             log.warn("No time records found for user {} within a given period", username);
             return EmployeeWorkTimeResponse.defaultResponse();
         }
+        return calculateEmployeeWorkTimeResponse(username, timeRecords, start, end);
+    }
 
+    private EmployeeWorkTimeResponse calculateEmployeeWorkTimeResponse(String username,
+                                                                                List<TimeRecord> timeRecords,
+                                                                                LocalDateTime start, LocalDateTime end) {
         var calculator = new WorkTimeCalculator();
         int totalMinutes = calculator.calculateTotalMinutes(timeRecords, start, end);
         int totalHours = totalMinutes / 60;

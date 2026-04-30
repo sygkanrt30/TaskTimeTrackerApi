@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ProblemDetail catchIllegalArgumentException(IllegalArgumentException e) {
-        return getAppErrorHandlerResponseDto(e, HttpStatus.INTERNAL_SERVER_ERROR);
+        return getAppErrorHandlerResponseDto(e, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler

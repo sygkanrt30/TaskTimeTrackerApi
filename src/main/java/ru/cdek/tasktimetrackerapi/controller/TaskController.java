@@ -25,7 +25,7 @@ public class TaskController {
     }
 
     @PatchMapping("/update/status")
-    public ResponseEntity<TaskResponseDto> updateStatus(@RequestBody UpdateTaskStatusRequest request) {
+    public ResponseEntity<TaskResponseDto> updateStatus(@Valid @RequestBody UpdateTaskStatusRequest request) {
         return ResponseEntity.ok(taskService.updateTaskStatus(request));
     }
 }

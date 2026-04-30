@@ -7,4 +7,8 @@ public class RegistrationException extends TaskTimeTrackerApiException {
     public RegistrationException(String message, Throwable cause) {
         super(message, cause, HttpStatus.CONFLICT);
     }
+
+    public RegistrationException(String message) {
+        super(message,  HttpStatus.CONFLICT);
+    }
 }
