@@ -188,7 +188,6 @@ class TaskServiceImplTest {
         when(taskRepository.findById(TASK_ID)).thenReturn(Optional.of(task1));
         when(taskRepository.findById(taskId2)).thenReturn(Optional.of(task2));
         when(timeRecordService.findByTaskId(TASK_ID)).thenReturn(Optional.empty());
-        when(timeRecordService.findByTaskId(taskId2)).thenReturn(Optional.empty());
         doNothing().when(taskRepository).updateStatus(TASK_ID, TaskStatus.IN_PROGRESS);
         doNothing().when(taskRepository).updateStatus(taskId2, TaskStatus.DONE);
         when(taskMapper.toDto(task1)).thenReturn(expectedResponse1);

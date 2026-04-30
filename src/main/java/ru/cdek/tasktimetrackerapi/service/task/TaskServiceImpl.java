@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
 
     private void validateNewStatus(TaskStatus newStatus) {
         if (newStatus.equals(TaskStatus.NEW)) {
-            throw new IllegalArgumentException("Cannot update task status to NEW");
+            throw new IllegalArgumentException("Can not update task status to NEW");
         }
     }
 
@@ -62,7 +62,7 @@ public class TaskServiceImpl implements TaskService {
         if (newStatus.equals(TaskStatus.IN_PROGRESS)) {
             Optional<TimeRecord> timeRecords = timeRecordService.findByTaskId(task.getId());
             if (timeRecords.isPresent()) {
-                throw new IllegalArgumentException("Cannot update task status to IN_PROGRESS if time records exist");
+                throw new IllegalArgumentException("Can not update task status to IN_PROGRESS if time records exist");
             }
         }
     }
